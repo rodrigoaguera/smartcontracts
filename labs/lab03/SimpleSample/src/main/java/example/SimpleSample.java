@@ -99,7 +99,7 @@ public class SimpleSample extends ChaincodeBase {
 			e.printStackTrace();
 			return "{\"Error\":\"Expecting integer value for amount \"}";
 		}
-		Double taxaTransferencia = valA * 0.03;
+		int taxaTransferencia = valA * 0.03;
 		if(valA+taxaTransferencia>valFrom)
 			return "{\"Error\":\"Insufficient asset holding value for requested transfer amount \"}";
 		valFrom = valFrom-valA-taxaTransferencia;
