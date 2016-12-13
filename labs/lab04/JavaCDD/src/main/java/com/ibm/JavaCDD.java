@@ -129,7 +129,7 @@ public class JavaCDD extends ChaincodeBase {
 		try {
 			response = httpclient.execute(httpget);
 
-			log.info("Called Weather service");
+			log.info("Chamada ao servico de condicoes do tempo");
 
 			int statusCode = response.getStatusLine().getStatusCode();
 
@@ -138,7 +138,7 @@ public class JavaCDD extends ChaincodeBase {
 
 			if (statusCode == HttpStatus.SC_OK) {
 
-				log.info("Weather service call OK");
+				log.info("Chamada ao servico de condicoes do tempo OK");
 
 				WeatherObservationResponse weatherObservationResponse = mapper.readValue(responseString,
 						WeatherObservationResponse.class);
@@ -147,23 +147,23 @@ public class JavaCDD extends ChaincodeBase {
 					// then please redeem the client
 					contractRecord.totalAmountReceived += contractRecord.amountReceivedWhenContractIsActivated;
 					stub.putState(contractRecord.clientName, contractRecord.toString());
-					log.info("Contract condition valid " + weatherObservationResponse.getObservation().getTemp() + " < "
+					log.info("Condicao do contrato valida " + weatherObservationResponse.getObservation().getTemp() + " < "
 							+ contractRecord.temperatureThreshold);
 					contractExecuted = true;
 				} else {
-					log.info("Contract condition invalid " + weatherObservationResponse.getObservation().getTemp()
+					log.info("Condicao do contrato invalida " + weatherObservationResponse.getObservation().getTemp()
 							+ " > " + contractRecord.temperatureThreshold);
 				}
 
 			} else {
-				String errorMessage = "{\"Error\":\"Problem while calling Weather API : " + statusCode + " : "
+				String errorMessage = "{\"Error\":\"Problema ao chamar a API de condicoes do tempo: " + statusCode + " : "
 						+ responseString + "\"}";
 				log.error(errorMessage);
 				return errorMessage;
 			}
 
 		} catch (Exception e) {
-			String errorMessage = "{\"Error\":\"Problem while calling Weather API : " + e.getMessage() + "\"}";
+			String errorMessage = "{\"Error\":\"Problema ao chamar a API de condicoes do tempo: " + e.getMessage() + "\"}";
 			log.error(errorMessage);
 			try {
 				log.error(new ObjectMapper().writerWithDefaultPrettyPrinter().writeValueAsString(e.getStackTrace()));
